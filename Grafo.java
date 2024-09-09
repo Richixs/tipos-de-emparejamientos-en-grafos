@@ -2,12 +2,41 @@ import java.util.ArrayList;
 
 public class Grafo {
     private ArrayList<Vertice> verticeList;
-    private ArrayList arristaList;
+    private ArrayList<Arista> aristaList;
+    private boolean dirigido;
     
-    public Grafo() {
+    public Grafo(boolean dirigido) {
         this.verticeList = new ArrayList<Vertice>();
-        this.arristaList = new ArrayList<Arista>();
+        this.aristaList = new ArrayList<Arista>();
+        this.dirigido = dirigido;
     }
+
+    public Grafo(ArrayList<Vertice> verticeList, ArrayList<Arista> aristaList, boolean dirigido) {
+        this(dirigido);
+        this.verticeList = verticeList;
+        this.aristaList = aristaList;
+    }
+
+    public void printGrafo() {
+        System.out.println("Grafo - " + (this.dirigido ? "Dirigido" : "No Dirigido"));
+        for (Vertice vertice : verticeList) {
+            System.out.print(vertice.getIdVertice() + ": ");
+            ArrayList<String> adyacentes = new ArrayList<>();
+            for (Arista arista : aristaList) {
+                String verticeA = arista.getVertice(false).getIdVertice();
+                String verticeB = arista.getVertice(true).getIdVertice();
+                int peso = (int) arista.getArista().get(1);
+                if (vertice.getIdVertice().equals(verticeA)) {
+                    adyacentes.add(verticeB + (peso != 0 ? " (Peso: " + peso + ")" : ""));
+                }
+                if (!dirigido && vertice.getIdVertice().equals(verticeB)) {
+                    adyacentes.add(verticeA + (peso != 0 ? " (Peso: " + peso + ")" : ""));
+                }
+            }
+            System.out.println(String.join(", ", adyacentes));
+        }
+    }
+    
 
     public boolean addVertice(Vertice nuevoVertice) {
         try {
@@ -24,7 +53,7 @@ public class Grafo {
 
     public boolean addArista(Arista nuevaArista) {
         try {
-            this.arristaList.add(nuevaArista);
+            this.aristaList.add(nuevaArista);
             return true;
         } catch (Exception e) {
             System.out.println("No se pudo añadir la arista: [" + 
@@ -33,5 +62,9 @@ public class Grafo {
                 "Se capturó la excepción: " + e.getMessage());
             return false;
         }
+    }
+
+    public ArrayList<Vertice> getverticeList() {
+        return this.verticeList;
     }
 }
