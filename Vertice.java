@@ -10,7 +10,8 @@ public class Vertice {
         this(idNumeroVertice.toString());
     }
 
-    public String getIdVertice() {
+    @Override
+    public String toString() {
         return this.idVertice;
     }
 }
