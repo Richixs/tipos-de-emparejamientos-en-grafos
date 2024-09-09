@@ -24,7 +24,7 @@ public class Grafo {
             this.verticeList.add(nuevoVertice);
             return true;
         } catch (Exception e) {
-            System.out.println("No se puedo aniadir el vertice: " +
+            System.out.println("No se pudo aniadir el vertice: " +
                 nuevoVertice +
                 "\n se capturo la excepcion: " +
                 e.getMessage());
